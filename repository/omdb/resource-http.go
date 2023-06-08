@@ -1,7 +1,9 @@
 package omdb
 
 import (
+	"compress/gzip"
 	"context"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -48,8 +50,18 @@ func (r *omdbRepoClient) getMoviesByTitle(ctx context.Context, title string) ([]
 		return nil, errors.New("OMDB API returned non 200 status code")
 	}
 
+	// Check that the server actually sent compressed data
+	var reader io.ReadCloser
+	switch resp.Header.Get("Content-Encoding") {
+	case "gzip":
+		reader, err = gzip.NewReader(resp.Body)
+		defer reader.Close()
+	default:
+		reader = resp.Body
+	}
+
 	// read to bytes data
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := ioutil.ReadAll(reader)
 	if err != nil {
 		return nil, errors.AddTrace(err)
 	}
