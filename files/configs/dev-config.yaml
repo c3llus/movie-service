@@ -4,4 +4,4 @@ appname: "monolith-movie-service"
 
 omdb_client:
   host: "http://www.omdbapi.com"
-  key: "faf7e5bb&s"
+  key: "faf7e5bb"
