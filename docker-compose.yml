@@ -1,0 +1,16 @@
+# docker-compose.yml
+version: '3'
+services:
+  # postgres:
+  #   container_name: postgres
+  #   build: ./files/docker/postgres
+  #   ports:
+  #     - "5432:5432"
+  server:
+    container_name: server
+    build: .
+    ports:
+      - "8080:8080"
+    # depends_on:
+    #   postgres:
+    #     condition: service_started

@@ -1,0 +1,7 @@
+appname: "monolith-movie-service"
+
+# debug: {{ debug }}
+
+omdb_client:
+  host: "http://www.omdbapi.com"
+  key: "faf7e5bb&s"
