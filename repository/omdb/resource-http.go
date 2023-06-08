@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/c3llus/monolith-movie-service/app/resource/client"
 	"github.com/c3llus/monolith-movie-service/common/errors"
@@ -76,15 +75,10 @@ func (r *omdbRepoClient) getMoviesByTitle(ctx context.Context, title string) ([]
 	// TODO: make async parsing
 	for _, omdbMovie := range omdbResponse.Search {
 
-		year, err := strconv.Atoi(omdbMovie.Year)
-		if err != nil {
-			return nil, errors.AddTrace(err)
-		}
-
 		movies = append(movies, &modelmovies.Movie{
 			Id:         ksuid.New(),
 			Title:      omdbMovie.Title,
-			Year:       year,
+			Year:       omdbMovie.Year,
 			ImdbId:     omdbMovie.ImdbId,
 			PosterLink: omdbMovie.Poster,
 		})
@@ -131,15 +125,10 @@ func (r *omdbRepoClient) getMovieByImdbId(ctx context.Context, imdbId string) (*
 
 	// parse to our internal struct of Movie
 	// TODO: Make more modular
-	year, err := strconv.Atoi(omdbResponse.Year)
-	if err != nil {
-		return nil, errors.AddTrace(err)
-	}
-
 	movie = &modelmovies.Movie{
 		Id:         ksuid.New(),
 		Title:      omdbResponse.Title,
-		Year:       year,
+		Year:       omdbResponse.Year,
 		ImdbId:     omdbResponse.ImdbId,
 		PosterLink: omdbResponse.Poster,
 		// etc....
