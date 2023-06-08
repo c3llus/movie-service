@@ -1,8 +1,8 @@
 # movie-service
 
 Unfinished, will add later:
-- unit tests
-- server's endpoint being functional - currently working on last OMDB API not returning success resp. Got 401 unauthorized (key used is correct), debugging.
-- important (but tertiary in this test's req) - proper logging and error handling
+- unit tests -  and the mocks are not even generated yet.
+- important (but tertiary in this test's req) - proper logging and error handling.
+- the details endpoint response's body returned isn't complete. commented
 
 Other than that, server works well.
